@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap');
         
         body, html {
             height: 100%;
@@ -41,17 +41,30 @@
             margin: 20px 0;
         }
 
-        .logo {
-            width: 40px; 
-            height: auto;
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 20px;
         }
 
-        .catalog-container {
-            width: 80%; 
-            margin: auto; 
+        .horizontal-scroll::-webkit-scrollbar {
+            display: auto; 
         }
-        .navbar-toggler {
-            border: none; 
+
+        .product-card {
+            flex: 100 0 auto;
+            margin-right: 10px;
+            margin-left: 10px;      
+        }
+
+        .product-card img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .product-card p {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -88,43 +101,36 @@
     <div class="content">
         <div class="catalog-container"> 
             <div class="text-center mb-3">
-                <h1 class="catalog-title">Our Catalog</h1>
+                <h1 class="catalog-title">Our Macbook Series</h1>
             </div>
             <div class="catalog-subtitle">
                 We are committed to crafting high-quality products that not only meet your needs but also enhance your everyday life. We believe in innovation and excellence, ensuring every item we create brings joy and satisfaction.
             </div>
             <div class="divider"></div>
-            <div class="row"> 
-                @if ($products->isEmpty())
+            <div class="horizontal-scroll">
+                @if ($macbooks->isEmpty())
                     <div class="col-12 text-center">
                         <h5 class="text-muted text-danger">Data Kosong</h5>
                     </div>
                 @else
-                    @foreach ($products as $product)
-                        <div class="col-md-4 mb-3">
+                    @foreach ($macbooks as $macbook)
+                        <div class="product-card">
                             <div class="card">
                                 <div class="p-3 text-center">
-                                    <h1>{{ $product->product }}</h1>
-                                    <p>{{ $product->deskripsi }}</p>
-                                    @if ($product->product = 'Macbook')
-                                    <a href="{{url('macbook')}}" class="btn btn-outline-dark">View Product</a>
-                                    @else
-                                    <a href="#" class="btn btn-outline-dark">View Product</a>
-                                    @endif
-                                </div>
                                     
+                                    <img src="{{ asset('images/macbook.jpeg') }}" alt="Gambar Macbook">
+                                    <p>{{ $macbook->series }}</p>                        
+                                    <p>{{ 'IDR ' . number_format($macbook->price, 0, ',', '.') }}</p>
+                                </div>
                             </div>
                         </div>
-                        @if (($loop->iteration % 3) == 0) 
-                            </div><div class="row"> 
-                        @endif
                     @endforeach
-                    </div> 
                 @endif
             </div> 
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
